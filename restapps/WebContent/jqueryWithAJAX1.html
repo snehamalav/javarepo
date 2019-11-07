@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html> <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("button").click(function(){
+	   $("#did").html('');
+		$.ajax({
+			type: "GET",
+			url: "http://localhost:8084/restapps/rest/tracks/",
+			data: '',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			success: function(data) {
+				var x=JSON.stringify(data); 
+				var datas = JSON.parse(x);
+				var t='';
+				for(i=0; i<datas.length; i++)
+				    t = t+ datas[i].title+' '+datas[i].singer+ '<br>';
+
+				$("#did").html(t);
+			},
+			error: function(data) {
+			    $("#did").html(data);
+			}
+		});
+	});
+});
+</script>
+</head>
+<body> <button>CALL REST HTTP GET</button> 
+<div id='did'></div>
+</body> </html>

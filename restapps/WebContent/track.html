@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html> <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("button").click(function(){
+	   $("#did").html('');
+	   var text = $("#tid").val(); 
+		$.ajax({
+			type: "GET",
+			url: "http://localhost:8084/restapps/rest/tracks/"+text,
+			data: '',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			success: function(data) {
+			    if (typeof data === 'undefined') {
+					$("#did").html('No Data found'); }
+				else {
+					var x=JSON.stringify(data); console.log('x='+x);
+					var datas = JSON.parse(x);
+					var t='Singer is '+datas.singer;
+					$("#did").html(t); }
+			}
+		});
+	});
+});      
+</script>
+</head>
+<body> 
+Enter Title : <input type='text' name='tid' id='tid'>
+<button>submit</button> 
+<div id='did'></div>
+</body> </html>

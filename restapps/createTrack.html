@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("button").click(function(){
+            var title= $("#title").val();
+            //console.log(title)
+            var singer = $("#singer").val();
+            //console.log(singer)
+            $.ajax({
+                type:"POST",
+                url: 'http://localhost:8084/restapps/rest/tracks/post',
+                data: JSON.stringify({
+                    "title": title,
+                    "singer": singer
+                }),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function(data) {
+                	$("#did").html(data.message);
+                },
+                error: function(data) {
+                    $("#did").html(data.message);
+                }
+
+            })
+        })
+    })
+</script>
+</head>
+<body>
+    <div>
+        Enter title: <input type="text" name="title" id="title">
+        Enter singer: <input type="text" name="singer" id="singer">
+        <button>Submit</button>
+    </div>
+    <div id="did"></div>
+</body>
+</html>
